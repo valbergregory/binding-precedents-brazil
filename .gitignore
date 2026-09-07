@@ -1,0 +1,65 @@
+# data: never committed (MANIFEST.csv is kept)
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/MANIFEST.csv
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.duckdb
+*.duckdb.wal
+
+# logs, models, outputs are regenerated; directories are kept
+logs/*
+!logs/.gitkeep
+models/*
+!models/.gitkeep
+outputs/tables/*
+!outputs/tables/.gitkeep
+outputs/figures/*
+!outputs/figures/.gitkeep
+
+# secrets
+.env
+.Renviron
+
+# python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# R, targets, renv
+.Rproj.user/
+.Rhistory
+.RData
+_targets/
+renv/library/
+renv/staging/
+renv/local/
+renv/cellar/
+renv/python/
+
+# quarto
+article/_book/
+article/*_files/
+article/*.html
+article/*.pdf
+article/*.docx
+/.quarto/
+
+# generated Overleaf export and LaTeX build artefacts
+outputs/overleaf/*
+!outputs/overleaf/.gitkeep
+article/*.aux
+article/*.bbl
+article/*.blg
+article/*.fdb_latexmk
+article/*.fls
+article/*.log
+article/*.out
+article/*.synctex.gz
+article/*.toc
+article/main.pdf

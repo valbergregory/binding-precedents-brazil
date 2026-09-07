@@ -1,0 +1,185 @@
+# Verified data sources. Every entry was probed from this machine on the date in `verified_on`.
+# `access` describes what actually worked. Do not add a source without probing it.
+# Status codes: ok = usable programmatically; manual = usable only through a browser/UI;
+# partial = reachable but incomplete for our purpose; blocked = not usable.
+
+stj_precedentes_qualificados:
+  provider: STJ Portal de Dados Abertos (CKAN)
+  license: CC-BY
+  status: ok
+  verified_on: "2026-09-04"
+  dataset_page: https://dadosabertos.web.stj.jus.br/dataset/precedentes-qualificados
+  ckan_package_show: https://dadosabertos.web.stj.jus.br/api/3/action/package_show?id=precedentes-qualificados
+  resources:
+    temas_csv: https://dadosabertos.web.stj.jus.br/dataset/4238da2f-c07b-4c1a-b345-4402accacdcf/resource/df29da13-7d6b-41ba-ad96-cd1a5bbd191c/download/temas.csv
+    processos_csv: https://dadosabertos.web.stj.jus.br/dataset/4238da2f-c07b-4c1a-b345-4402accacdcf/resource/7ed21202-0049-4fcb-aa7c-48d810d3c499/download/processos.csv
+    dicionario_temas: https://dadosabertos.web.stj.jus.br/dataset/4238da2f-c07b-4c1a-b345-4402accacdcf/resource/d5e50514-6dba-4f1e-8557-94f135eae03b/download/dicionario-temas.csv
+    dicionario_processos: https://dadosabertos.web.stj.jus.br/dataset/4238da2f-c07b-4c1a-b345-4402accacdcf/resource/162e58f0-01c1-4d91-94a4-664b4de81e79/download/dicionario-processos.csv
+  observed:
+    temas_rows: 2400
+    temas_by_type: {Tema: 1502, Controvérsia: 837, PUIL: 27, IAC: 23, SIRDR: 11}
+    processos_rows: 5539
+    last_modified: "2026-09-03"
+    notes: >
+      tipoPrecedente value for repetitive themes is the string "Tema" (not "Tema Repetitivo").
+      dataJulgamento is empty for 345 of 1502 themes (mostly cancelled/pending); processos.csv
+      carries per-paradigm dates and court of origin (siglaTribunalOrigem, origemUF, tipoJusticaOrigem).
+      quantidadeProcessosSuspensoNaOrigem is 0 in every row and must not be used.
+
+stj_integras_decisoes:
+  provider: STJ Portal de Dados Abertos (CKAN)
+  license: CC-BY
+  status: ok
+  verified_on: "2026-09-04"
+  dataset_page: https://dadosabertos.web.stj.jus.br/dataset/integras-de-decisoes-terminativas-e-acordaos-do-diario-da-justica
+  ckan_package_show: https://dadosabertos.web.stj.jus.br/api/3/action/package_show?id=integras-de-decisoes-terminativas-e-acordaos-do-diario-da-justica
+  resource_pattern:
+    metadata: metadados{YYYYMMDD}.json   # list of records; dates in epoch milliseconds
+    texts: textos{YYYYMMDD}.zip          # {YYYYMMDD}/{seqDocumento}.txt, UTF-8, "<br>" line breaks
+  observed:
+    resources: 2583
+    coverage: "2021-01-04 to 2026-08-26 (daily on publication days)"
+    compressed_total_bytes: 13244706289
+    sample_day_2023_05_10: {metadata_records: 2791, texts: 2743, avg_text_bytes: 10505, decisoes: 1551, acordaos: 1240}
+    fields: [seqDocumento, dataPublicacao, tipoDocumento, numeroRegistro, processo, dataRecebimento, dataDistribuicao, ministro, recurso, teor, descricaoMonocratica, assuntos]
+    notes: >
+      No court-of-origin field and no CNJ case number in metadata. Origin must be recovered via
+      atas de distribuição (numeroRegistro -> numeroUnico), acervo snapshot, or regex on the text.
+      Secret-of-justice cases are excluded by the provider.
+
+stj_espelhos_acordaos:
+  provider: STJ Portal de Dados Abertos (CKAN)
+  license: CC-BY
+  status: ok
+  verified_on: "2026-09-04"
+  datasets:
+    - espelhos-de-acordaos-corte-especial
+    - espelhos-de-acordaos-primeira-secao
+    - espelhos-de-acordaos-segunda-secao
+    - espelhos-de-acordaos-terceira-secao
+    - espelhos-de-acordaos-primeira-turma
+    - espelhos-de-acordaos-segunda-turma
+    - espelhos-de-acordaos-terceira-turma
+    - espelhos-de-acordaos-quarta-turma
+    - espelhos-de-acordaos-quinta-turma
+    - espelhos-de-acordaos-sexta-turma
+  resource_pattern:
+    historical: "20220507.zip or 20220508.zip (full history to May 2022)"
+    monthly: "{YYYYMMDD}.json (increments since previous month, to 2026-06-30)"
+  observed:
+    primeira_secao_total_bytes: 33994087
+    segunda_turma_total_bytes: 156343921
+    fields: [id, numeroProcesso, numeroRegistro, siglaClasse, descricaoClasse, nomeOrgaoJulgador, ministroRelator, ementa, tipoDeDecisao, dataDecisao, decisao, jurisprudenciaCitada, notas, informacoesComplementares, termosAuxiliares, teseJuridica, tema, referenciasLegislativas, acordaosSimilares, dataPublicacao]
+    notes: >
+      Curated subset (only judgments with documentary treatment). Structured fields `tema`,
+      `teseJuridica`, `jurisprudenciaCitada` make it a validation source for the regex extractor.
+      Same decision may appear in several files; deduplicate on `id`.
+
+stj_atas_distribuicao:
+  provider: STJ Portal de Dados Abertos (CKAN)
+  license: CC-BY
+  status: ok
+  verified_on: "2026-09-05"
+  ckan_package_show: https://dadosabertos.web.stj.jus.br/api/3/action/package_show?id=atas-de-distribuicao
+  observed:
+    resources: 1006
+    coverage: "ata20230630.json to ata20260904.json (daily)"
+    total_bytes: 4158444962
+    key_fields: [numeroUnico, numeroRegistro, dataHoraDistribuicao, siglaClasse, codigoClasseCNJ, numeroNaClasse, codigoOrgaoJulgador, nomeMinistroRelator, codigoAssuntoCNJ]
+    personal_data_fields_to_drop: [partes, advogados]
+    notes: >
+      numeroUnico is the CNJ unified number, whose J.TR segment identifies the court of origin
+      (e.g. 8.26 = TJSP, 4.04 = TRF4). This is the deterministic crosswalk numeroRegistro -> origin
+      for cases distributed from 2023-06-30 onwards.
+
+stj_acervo_tramitacao:
+  provider: STJ Portal de Dados Abertos (CKAN)
+  license: CC-BY
+  status: partial
+  verified_on: "2026-09-05"
+  ckan_package_show: https://dadosabertos.web.stj.jus.br/api/3/action/package_show?id=acervo-em-tramitacao
+  observed:
+    resources: "single snapshot processos_tramitando_20260902.json.gz (77 MB)"
+    key_fields: [numeroUnico, numeroRegistro, siglaClasse, dataRecebimento, codigoOrgaoJulgador, codigoAssuntoCNJ, sobrestado, origem, UF, dataUltimaDecisao]
+    notes: >
+      Cross-section only (pending cases on the snapshot date). Useful for origin crosswalk of
+      pending cases and for `sobrestado` reason (T = repetitive theme, RG = general repercussion).
+
+cnj_datajud_api:
+  provider: CNJ DataJud API Pública
+  license: CNJ terms of use (non-commercial; notify CNJ of publications; no accuracy guarantee)
+  status: ok
+  verified_on: "2026-09-05"
+  wiki: https://datajud-wiki.cnj.jus.br/api-publica/
+  endpoint_pattern: https://api-publica.datajud.cnj.jus.br/api_publica_{alias}/_search
+  auth: "HTTP header `Authorization: ApiKey <public key published on the wiki Acesso page>`; store in DATAJUD_API_KEY"
+  query: "POST, Elasticsearch query DSL; size up to 10000; paginate with sort on @timestamp + search_after"
+  observed:
+    stj_index_hits: ">= 10000 (match_all)"
+    tjsp_index_hits: ">= 10000 (match_all)"
+    fields: [id, tribunal, grau, numeroProcesso, dataAjuizamento, nivelSigilo, orgaoJulgador, classe, sistema, formato, dataHoraUltimaAtualizacao, movimentos, assuntos]
+    notes: >
+      Metadata only: no decision text, no ementa, no theme linkage. Use for durations, movements,
+      case flow (RQ5) and as an origin/assunto crosswalk keyed on numeroProcesso (CNJ number).
+
+cnj_bnp_pangea:
+  provider: CNJ / PDPJ-Br Banco Nacional de Precedentes (Pangea)
+  license: not stated on the public page
+  status: manual
+  verified_on: "2026-09-05"
+  portal: https://bnp.pdpj.jus.br/
+  frontend_backend_url: https://pangeabnp.pdpj.jus.br/api/v1   # from the SPA's public env.js
+  documentation: http://docs.pdpj.jus.br/servicos-negociais/pangeabnp/
+  manual: http://docs.pdpj.jus.br/servicos-negociais/BNP-Pangea/BNP%20-%20Manual%20de%20Utiliza%C3%A7%C3%A3o/
+  observed:
+    notes: >
+      No documented public bulk API. Official docs describe an integration API for courts using
+      OAuth2 client credentials through the PDPJ SSO. A blind POST to /api/v1/precedentes returned
+      HTTP 500 (unknown request schema). Manual mentions no CSV/XML export. Treat BNP as a manual
+      verification/complement source, not as a bulk source.
+
+stf_repercussao_geral:
+  provider: STF
+  license: not stated
+  status: partial
+  verified_on: "2026-09-05"
+  pages:
+    corte_aberta: https://portal.stf.jus.br/hotsites/corteaberta/   # returns 403 to non-browser clients without UA
+    rg_panel_qlik: https://transparencia.stf.jus.br/extensions/repercussao_geral/repercussao_geral.html
+    teses_page: https://portal.stf.jus.br/repercussaogeral/teses.asp
+    teses_feed: https://portal.stf.jus.br/repercussaogeral/retornartesesrepercussaogeral.asp  # POST form param `tipo`; parameters not yet discovered (400 for tipo=1)
+    listas_rg: https://portal.stf.jus.br/textos/verTexto.asp?servico=jurisprudenciaRepercussaoGeral&pagina=listas_rg
+    temasrg_xlsx: https://www.stf.jus.br/arquivo/cms/publicacaoBOInternet/anexo/temasrg.xlsx
+  observed:
+    temasrg_xlsx: "1124 rows; header at row 3; columns Num Tema, Tema, Leading case, Descrição, Título, Tese, Ramo do direito, Assuntos, Códigos dos Assuntos, status columns; internal stamp 'Atualização: 11/09/20' (stale)"
+    notes: >
+      Theme registry obtainable (stale XLSX, Qlik export through the UI, or Base dos Dados
+      'Corte Aberta' tables on BigQuery, coverage 2000 to 2025-03, Google account needed).
+      STF full-text decisions are not bulk-downloadable; jurisprudencia.stf.jus.br answers
+      HTTP 202 challenge pages to non-browser clients. STF themes will be analysed only as cited
+      in STJ decisions unless a lawful bulk channel is found.
+
+cnj_justica_em_numeros:
+  provider: CNJ Justiça em Números (base de dados)
+  license: not stated (public statistics)
+  status: ok
+  verified_on: "2026-09-05"
+  page: https://www.cnj.jus.br/pesquisas-judiciarias/justica-em-numeros/base-de-dados/
+  resources:
+    base_2026: https://www.cnj.jus.br/wp-content/uploads/2026/06/23-jun-2026.zip
+  observed:
+    zip_bytes: 4248648
+    files: [Variaveis.csv, BD_Consolidado_JF_Secao_23_Jun_2026.csv, JN_23-Jun-2026.csv]
+    jn_shape: "1595 rows x 1314 variables; years 2009-2025; one row per court-year (sigla)"
+    key_variables: [tc, tc1, tc2, k, mag, cp, sent, tbaix]
+    notes: Court-year institutional covariates (congestion, workload, magistrates, pending cases).
+
+cnj_resolucao_615_2025:
+  provider: CNJ
+  status: reference
+  verified_on: "2026-09-04"
+  url: https://atos.cnj.jus.br/atos/detalhar/6001
+  notes: >
+    Resolution of 11 March 2025 (in force since 14 July 2025) on AI governance in the Judiciary,
+    replacing Resolution 332/2020. Applies directly to courts; for this external study it is a
+    normative benchmark for transparency, human oversight and risk classification of AI outputs.

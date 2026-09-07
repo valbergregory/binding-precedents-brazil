@@ -1,0 +1,27 @@
+﻿Campo;Nome extenso;Descrição
+sequencialPrecedente;Sequencial do precedente;Número sequencial atribuído pelo banco de dados quando inserido novo precedente. É utilizado para relacionar os processos com os temas disponibilizados no outro arquivo. 
+tipoPrecedente;Tipo de precedente qualificado;Classificação dada ao precedente qualificado, conforme sua natureza jurídica: Controvérsia, Tema Repetitivo, Incidente de Assunção de Competência - IAC, Suspensão em Incidente de resolução de Demandas Repetitivas - SIRDR ou Pedido de Uniformização de Interpretação de Lei - PUIL.
+numeroPrecedente;Número do precedente qualificado;Número sequencial crescente dado ao precedente qualificado do STJ quando da sua criação conforme sua natureza jurídica: Controvérsia, Tema Repetitivo, Incidente de Assunção de Competência - IAC, Suspensão em Incidente de resolução de Demandas Repetitivas - SIRDR ou Pedido de Uniformização de Interpretação de Lei - PUIL.
+Processo;Processo;Classe e o número do processo/recurso no STJ.
+numeroRegistro;Número de registro;Número de registro do processo/recurso no STJ.
+ministroRelator;Ministro Relator;Nome do ministro relator sorteado para analisar e julgar monocraticamente o processo no STJ ou preparar voto para julgamento pelo órgão colegiado.
+leadingCase;Processo leading case;Processo que lidera o grupo de processos que compõem uma Controvérsia ou Tema repetitivo.
+dataAfetacao;Data da afetação;Data em que o órgão colegiado decidiu pela afetação dos processos ao rito dos recursos repetitivos.
+dataPublicacaoAfetacao;Data da publicação do acórdão de afetação;Data em que foi publicado o acórdão do Proafr no qual o órgão colegiado decidiu pela afetação dos processos ao rito dos recursos repetitivos.
+observacaoAfetacao;Observação sobre a Afetação;Observações pertinentes à delimitação da questão submetida a julgamento ou da discussão que foi efetivamente afetada, para esclarecer eventuais limites da matéria discutida e decidida no precedente qualificado.
+NOME_MINISTRO_AFETACAO;Nome do ministro que propôs a afetação;Nome do ministro que elaborou a proposta de afetação e colocou no sistema de AfetaçãoWEb para julgamento virtual colegiado.
+dataVistaMPF;Data da vista ao Ministério Público Federal;Data em que foi dada vista do processo ao órgão do Ministério Público Federal.
+dataJulgamento;Data de julgamento;Data em que o processo/recurso foi julgado.
+dataPbulicacaoAcordao;Data da publicação do Acórdão;Data da publicação do acórdão que julgou o processo/recurso.
+processoSTF;Processo no STF;Número do processo/recurso relacionado que tramita no STF.
+dataRemessaSTF;Data da remessa ao STF;Data em que os autos foram remetidos ao STF.
+situacaoProcessoSTF;Situação do processo no STF;Situação em que o processo está no STF.
+tribunalOrigem;Tribunal de origem;Nome do Tribunal do qual o processo/recurso que chegou no STJ é originário.
+siglaTribunalOrigem;Sigla do Tribunal de origem;Sigla oficial que designa o tribunal de origem.
+siglaRegiaoOrigem;Sigla da região do Tribunal de origem;Sigla de uma determinada região brasileira na qual está localizada a sede do tribunal de origem do processo. 
+origemUF;Sigla da Unidade federativa da origem;Sigla da unidade federativa onde se localiza o Tribunal de origem.
+tipoJusticaOrigem;Tipo de Justiça da origem;Tipo de justiça na qual o processo tramitou na origem, conforme a sua natureza jurídica: justiça federal ou estadual.
+quantidadeProcessosSuspensoNaOrigem;Quantidade de processos sobrestados na origem;Quantitativo de processos sobrestados na origem em razão de algum precedente qualificado.
+dataPublicacaoEmbargosDeDeclaração;Data da Publicação dos embargos de Declaração;Data da publicação da decisão/acórdão que julgou os embargos de declaração.
+Desafetação;Desafetação;Informação de que o processo/recurso foi desafetado/retirado do rito dos recursos repetitivos.
+EmbargosdeDivergência;Embargos de divergência;Informação sobre a existência de oposição de embargos de divergência no processo.

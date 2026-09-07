@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below. No empirical results are available yet (Phase 0)."
+title: "Do Binding Precedents Actually Bind? Measuring Judicial Compliance and Diffusion Across Brazilian Courts (research code)"
+type: software
+authors:
+  - family-names: Gregory
+    given-names: Valber
+version: 0.0.1-phase0
+date-released: "2026-09-05"
+license: MIT
+repository-code: "https://github.com/valbergregory/binding-precedents-brazil"
+keywords:
+  - jurimetrics
+  - precedents
+  - Brazil
+  - STJ
+  - STF
+  - event study
+  - survival analysis
+  - legal NLP

@@ -1,0 +1,30 @@
+# Runtime configuration (paths, windows, limits). Secrets live in .env, not here.
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  duckdb: data/processed/bpb.duckdb
+  logs: logs
+  manifest: data/raw/MANIFEST.csv
+
+download:
+  user_agent: "binding-precedents-brazil research crawler (academic; contact via repository)"
+  timeout_seconds: 120
+  max_retries: 4
+  backoff_seconds: 5
+  datajud_requests_per_second: 1
+
+study_window:
+  # Íntegras coverage starts 2021-01-04; two years before/after a fixation date implies:
+  strict_fixation_min: "2023-01-01"
+  strict_fixation_max: "2024-08-31"
+  relaxed_fixation_min: "2022-07-01"   # at least 18 months of pre-period
+  months_before: 24
+  months_after: 24
+
+poc:
+  # Phase 1 proof of concept: to be chosen from docs/02_candidate_precedents.md after the
+  # go/no-go review. Left empty on purpose; nothing has been selected yet.
+  tema_stj: null
+  sample_days_before: 20
+  sample_days_after: 20
