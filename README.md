@@ -83,6 +83,8 @@ outputs/     tables, figures, overleaf (generated)                          [git
 
 ## Data licences and ethics
 
+Code: MIT ([LICENSE](LICENSE)). Text, documentation and data: see [LICENSING.md](LICENSING.md).
+
 STJ open data: CC-BY (attribution in the article). CNJ DataJud: terms of use (non-commercial;
 no redistribution; CNJ notified of publications). STF and CNJ portals: their own terms.
 Raw data are never committed; the manifest lets anyone re-download them. No personal data

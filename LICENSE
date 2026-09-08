@@ -19,8 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-This license covers the code and documentation in this repository only. Data obtained
-from the STJ Open Data Portal are licensed CC-BY by the STJ; data from the CNJ DataJud
-public API are subject to the CNJ terms of use; data from STF and CNJ portals keep their
-respective terms. Raw data are not redistributed in this repository.
