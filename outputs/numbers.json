@@ -1,0 +1,30 @@
+{
+ "pocCorpusDocuments": {
+  "value": 1221887,
+  "decimals": 0
+ },
+ "pocCorpusWithText": {
+  "value": 1139818,
+  "decimals": 0
+ },
+ "pocCorpusCases": {
+  "value": 893433,
+  "decimals": 0
+ },
+ "pocTemaOneOneThreeTwoCitingDocs": {
+  "value": 790,
+  "decimals": 0
+ },
+ "pocTemaOneOneThreeTwoCitingDocsStj": {
+  "value": 291,
+  "decimals": 0
+ },
+ "pocTemaOneOneThreeTwoMentions": {
+  "value": 1873,
+  "decimals": 0
+ },
+ "pocOriginTextCoveragePct": {
+  "value": 48.2,
+  "decimals": 1
+ }
+}

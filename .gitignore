@@ -63,3 +63,6 @@ article/*.out
 article/*.synctex.gz
 article/*.toc
 article/main.pdf
+
+# salted-hash secret (bpb.integras)
+.secrets/

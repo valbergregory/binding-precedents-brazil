@@ -16,7 +16,7 @@ phase starts before the gate of the previous phase is recorded in `CLAUDE.md`.
 | 7 | Robustness | Placebo dates; pre-trends; alternative citation definitions; label-error corrections; exclusion of ambiguous theme numbers; sensitivity to origin-recovery channel | Robustness appendix | — | 2 weeks |
 | 8 | Writing | Article in Quarto (English), methodological appendix, data availability statement, model card, data card, limitations report; CNJ notification for DataJud-derived results | `article/`, `docs/` | — | 3-4 weeks |
 
-## Phase 1 in detail (the next step, not yet started)
+## Phase 1 in detail (steps 2–4 and 7 executed on 2026-09-12 for the provisional theme 1132 — see docs/08_poc_report.md; steps 1, 5 and 6 are the author's)
 
 1. Choose the PoC theme from `docs/02_candidate_precedents.md` (author decision).
 2. Implement `scripts/04_download_integras.py --from YYYY-MM-DD --to YYYY-MM-DD --resume`

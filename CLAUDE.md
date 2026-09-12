@@ -66,5 +66,11 @@ Portfolio-wide policy: `docs/AI_POLICY_AND_REPRODUCIBILITY.md` (binding for this
 - 2026-09-08: Phase 0 complete (docs/00-07, ETHICS, RUNBOOK, sources.yml probed, schema applied,
   extractors with tests, manifest with the STJ registry, requirements.lock, renv.lock, LaTeX
   skeleton, Overleaf exporter). Repository public on GitHub.
-- Pending author decisions: (1) confirm Python-only (R layer removal); (2) PoC theme
-  (proposal: Tema 1132, see docs/02). Phase 1 (proof of concept) NOT started.
+- 2026-09-12: Phase 1 scripts 04, 05, 07, 08, 09 written and run end-to-end (`scripts/run_poc_chain.ps1`) for the
+  **provisional** theme 1132 on the 24-month window 2022-08..2024-08, reading the íntegras from the local mirror
+  (`../STJ-Moral-Damages-Jurimetrics/data/raw/stj_integras`; manifest rows keep the CKAN URLs). Corpus 1,221,887 documents
+  (1,139,818 with text; 893,433 cases); 790 documents cite Tema 1132 (291 STJ-attributed; 153 pre / 637 post); text-only
+  origin coverage 48 %. Report: `docs/08_poc_report.md`; exports in `outputs/overleaf/`. Script 06 (atas, ~2.3 GB) not written.
+  Source finding: daily text coverage varies (some days ship few TXT); `documents_raw_text` is the analysis universe.
+- Pending author decisions: (1) confirm Python-only (R layer removal); (2) confirm the PoC theme (1132 or another — re-run the
+  chain with `-Tema N -Subject S`); (3) authorise the atas download (step 2.3); (4) manual checks for Gate 1 (docs/05 step 6).

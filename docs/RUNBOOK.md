@@ -24,16 +24,21 @@ repository root. PowerShell is assumed; Git Bash works with `make`.
 | 1.3 | `python scripts/03_init_duckdb.py` | `sql/*.sql` | `data/processed/bpb.duckdb` (empty tables) | 1 s |
 | 1.4 | `pytest -q` | `tests/` | console | 1 s |
 
-## 2. Proof of concept **[Phase 1+]**
+## 2. Proof of concept (Phase 1 — scripts written and run on 2026-09-12 for the provisional theme 1132)
 
 | Step | Command | Reads | Writes | Time |
 |---|---|---|---|---|
-| 2.1 | `python scripts/04_download_integras.py --from 2022-08-01 --to 2024-08-31 --resume` (window set by the PoC theme) | CKAN listing | `data/raw/stj_integras/{metadados,textos}*`, manifest rows | minutes per month of data |
-| 2.2 | `python scripts/05_load_integras.py --resume` | 2.1 | `documents`, `documents_raw_text` | ~1 min per month |
-| 2.3 | `python scripts/06_download_atas.py --from ... --resume` (drops `partes`/`advogados` before writing) | CKAN | `data/interim/atas/*.parquet`, `cases` | minutes |
-| 2.4 | `python scripts/07_extract_citations.py --extractor-version v1` | `documents_raw_text` | `citations` | seconds per 10k docs |
-| 2.5 | `python scripts/08_recover_origin.py` | `documents_raw_text`, `cases` | `cases.origin_*` | seconds |
-| 2.6 | `python scripts/09_poc_report.py --tema <N>` | DuckDB | `docs/08_poc_report.md`, `outputs/tables/poc_*.csv` | seconds |
+| 2.1 | `python scripts/04_download_integras.py --from 2022-08-01 --to 2024-08-31 --resume [--mirror DIR] [--no-mirror]` | CKAN listing (cached in `data/raw/stj_integras/package_show.json`); local mirror `../STJ-Moral-Damages-Jurimetrics/data/raw/stj_integras` (CKAN download of 2026-09-07/08, sha256 checked against its CHECKSUMS) or the network | `data/raw/stj_integras/{metadata,texts}/`, manifest rows (url = CKAN, notes = mirror or download) | ~3 min for 24 months from the mirror |
+| 2.2 | `python scripts/05_load_integras.py --resume [--from --to]` | 2.1 | `documents`, `documents_raw_text`, `load_log` (reporter salted-hashed with `.secrets/salt`) | ~0.2 min per 10k docs |
+| 2.3 | `python scripts/06_download_atas.py --from ... --resume` (**not written yet**: ~2.3 GB of atas for the window; needs the author's go-ahead; drops `partes`/`advogados` before writing) | CKAN | `data/interim/atas/*.parquet`, `cases` | minutes |
+| 2.4 | `python scripts/07_extract_citations.py --extractor-version v1 --resume` | `documents_raw_text` | `citations`, `citations_done` | ~1 s per 2k docs |
+| 2.5 | `python scripts/08_recover_origin.py --resume` | `documents_raw_text`, `cases` | `cases` (text-only channels: cnj_number_in_text, regex_trf, regex_tj; ≈60 % coverage on the 2023-08 sample), `courts` reference rows | minutes |
+| 2.6 | `python scripts/09_poc_report.py --tema 1132 --subject 9582` | DuckDB, `data/raw/stj_precedentes/temas.csv` | `docs/08_poc_report.md` (counts only), `outputs/tables/poc_*.csv`, `outputs/numbers.json` | seconds |
+| 2.x | `.\scriptsun_poc_chain.ps1 -Tema 1132 -Subject 9582 -From 2022-08-01 -To 2024-08-31` | runs 2.1 → 2.2 → 2.4 → 2.5 → 2.6 → 9.1 in sequence; log `logs/poc_chain.out` | | ~1 h |
+
+Source finding (2026-09-12): text coverage of the íntegras varies by day — some days ship far fewer TXT than metadata rows
+(e.g. 2023-08-02: 4,284 metadata rows, 71 texts) and the mirror matches the CKAN byte sizes, so it is a property of the
+source. `documents` keeps every metadata row; analyses must condition on `documents_raw_text`.
 
 ## 3. Full ingestion, corpus, annotation, models, econometrics **[Phase 2-7]**
 
